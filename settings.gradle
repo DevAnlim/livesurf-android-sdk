@@ -1,0 +1,2 @@
+include ':livesurf-sdk'
+rootProject.name='livesurf-android-sdk'

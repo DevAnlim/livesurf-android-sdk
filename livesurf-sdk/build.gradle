@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
+}
+
+android {
+    namespace 'ru.decpro.livesurfsdk'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 34
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+    implementation "com.squareup.okhttp3:okhttp:4.11.0"
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'ru.decpro'
+            artifactId = 'livesurf-sdk'
+            version = '1.0.0'
+            afterEvaluate {
+                artifact("$buildDir/outputs/aar/livesurf-sdk-release.aar")
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "localBuild"
+            url = uri("$rootDir/repo")
+        }
+    }
+}
