@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'maven-publish'
 }
 
 android {
@@ -11,6 +10,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 34
+        versionCode 1
+        versionName "1.0"
     }
 
     compileOptions {
@@ -31,18 +32,13 @@ dependencies {
 publishing {
     publications {
         release(MavenPublication) {
-            groupId = 'ru.decpro'
-            artifactId = 'livesurf-sdk'
-            version = '1.0.0'
+            groupId = 'com.github.DevAnlim'
+            artifactId = 'LiveSurfSDK'
+            version = '1.0'
+
             afterEvaluate {
-                artifact("$buildDir/outputs/aar/livesurf-sdk-release.aar")
+                from components.release
             }
-        }
-    }
-    repositories {
-        maven {
-            name = "localBuild"
-            url = uri("$rootDir/repo")
         }
     }
 }
