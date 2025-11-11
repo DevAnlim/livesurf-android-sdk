@@ -94,6 +94,87 @@ fun exampleLiveSurfKotlin() {
 }
 ```
 
+## Пример использования (Java)
+```java
+import ru.decpro.livesurfsdk.LiveSurfApi;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class LiveSurfJavaExample {
+
+    public static void main(String[] args) {
+        new Thread(() -> {
+            LiveSurfApi api = new LiveSurfApi("ВАШ_API_КЛЮЧ");
+
+            try {
+                // 1️⃣ Информация о пользователе
+                JSONObject user = (JSONObject) api.getUser();
+                System.out.println("Баланс: " + user.getInt("credits") +
+                                   " / Режим: " + user.getString("workmode"));
+
+                // 2️⃣ Список категорий
+                JSONObject categories = (JSONObject) api.getCategories();
+                System.out.println("Доступные категории:");
+                if (categories.has("data")) {
+                    JSONArray cats = categories.getJSONArray("data");
+                    for (int i = 0; i < cats.length(); i++) {
+                        JSONObject cat = cats.getJSONObject(i);
+                        System.out.println("- " + cat.getInt("id") + ": " + cat.getString("name"));
+                    }
+                }
+
+                // 3️⃣ Создаём новую группу
+                JSONObject groupData = new JSONObject();
+                groupData.put("name", "Тестовая группа Java SDK");
+                groupData.put("hour_limit", 50);
+                groupData.put("day_limit", 1000);
+                groupData.put("category", 1);
+                groupData.put("language", 1);
+                groupData.put("timezone", "Europe/Moscow");
+                groupData.put("use_profiles", true);
+                groupData.put("geo", new int[]{1, 2});
+                JSONArray pages = new JSONArray();
+                JSONObject page = new JSONObject();
+                page.put("url", new String[]{"https://example.com"});
+                page.put("showtime", new int[]{15, 30});
+                pages.put(page);
+                groupData.put("pages", pages);
+
+                JSONObject newGroup = (JSONObject) api.createGroup(groupData);
+                System.out.println("Создана группа ID: " + newGroup.getInt("id"));
+
+                // 4️⃣ Получаем все группы
+                JSONObject groups = (JSONObject) api.getGroups();
+                System.out.println("Всего групп: " + groups.length());
+
+                // 5️⃣ Клонируем группу
+                JSONObject clone = (JSONObject) api.cloneGroup(newGroup.getInt("id"), new JSONObject().put("name", "Копия тестовой группы"));
+                System.out.println("Создан клон группы ID: " + clone.getInt("id"));
+
+                // 6️⃣ Добавляем кредиты
+                api.addGroupCredits(newGroup.getInt("id"), 100);
+                System.out.println("Кредиты успешно зачислены.");
+
+                // 7️⃣ Статистика
+                JSONObject stats = (JSONObject) api.getStats(Map.of(
+                        "group_id", String.valueOf(newGroup.getInt("id")),
+                        "date", "2025-11-11"
+                ));
+                System.out.println("Статистика за сегодня: " + stats);
+
+                // 8️⃣ Удаляем группу
+                api.deleteGroup(newGroup.getInt("id"));
+                System.out.println("Группа успешно удалена.");
+
+            } catch (Exception e) {
+                System.err.println("⚠️ Ошибка: " + e.getMessage());
+            }
+        }).start();
+    }
+}
+
+```
+
 ## Доступные методы API
 
 ### Пользователь
@@ -119,25 +200,25 @@ fun exampleLiveSurfKotlin() {
 |-------|----------|
 | `getGroups()` | Информация о всех добавленных группах |
 | `getGroup(int $groupId)` | Информация о конкретной группе |
-| `updateGroup(int $groupId, array $data)` | Изменение настроек группы |
-| `deleteGroup(int $groupId)` | Удаление группы |
-| `createGroup(array $data)` | Создание новой группы |
-| `cloneGroup(int $groupId, string $name)` | Клонирование группы |
-| `addGroupCredits(int $groupId, int $credits)` | Зачисление кредитов группы |
+| `updateGroup(id: Int, data: JSONObject)` | Изменение настроек группы |
+| `deleteGroup(id: Int)` | Удаление группы |
+| `createGroup(data: JSONObject)` | Создание новой группы |
+| `cloneGroup(id: Int, data: JSONObject? = null)` | Клонирование группы |
+| `addGroupCredits(id: Int, credits: Int)` | Зачисление кредитов группы |
 
 ### Страницы
 | Метод | Описание |
 |-------|----------|
-| `getPage(int $pageId)` | Информация о конкретной странице |
-| `updatePage(int $pageId, array $data)` | Изменение настроек страницы |
-| `deletePage(int $pageId)` | Удаление страницы |
-| `createPage(array $data)` | Создание новой страницы |
-| `clonePage(int $pageId)` | Клонирование страницы |
-| `movePageUp(int $pageId)` | Перемещение страницы вверх |
-| `movePageDown(int $pageId)` | Перемещение страницы вниз |
-| `startPage(int $pageId)` | Запуск страницы в работу |
-| `stopPage(int $pageId)` | Остановка работы страницы |
-| `getStats(array $params)` | Статистика показа страницы |
+| `getPage(id: Int)` | Информация о конкретной странице |
+| `updatePage(id: Int, data: JSONObject)` | Изменение настроек страницы |
+| `deletePage(id: Int)` | Удаление страницы |
+| `createPage(data: JSONObject)` | Создание новой страницы |
+| `clonePage(id: Int)` | Клонирование страницы |
+| `movePageUp(id: Int)` | Перемещение страницы вверх |
+| `movePageDown(id: Int)` | Перемещение страницы вниз |
+| `startPage(id: Int)` | Запуск страницы в работу |
+| `stopPage(id: Int)` | Остановка работы страницы |
+| `getStats(params: Map<String, String>)` | Статистика показа страницы |
 
 ## Лицензия
 
