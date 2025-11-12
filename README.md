@@ -6,7 +6,7 @@
 - Документация API (https://livesurf.ru/api_documentation.html)
 - Получить API-ключ (https://livesurf.ru/api)
 
-## Возможности
+## 🧩 Возможности
 - Авторизация по API-ключу через заголовок `Authorization`
 - HTTP: GET / POST / PATCH / DELETE
 - Контроль лимита запросов (по умолчанию 10 запросов/сек)
@@ -18,7 +18,26 @@
 2. Открыть проект в Android Studio (File → Open -> выберите папку).
 3. Build → Make Project. Модуль `livesurf-android-sdk` сгенерирует AAR.
 
-## Пример использования (Kotlin)
+## 📦 Подключаем к проекту
+**Добавляем в settings.gradle.kts**
+```gradle
+	dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url = uri("https://jitpack.io") }
+		}
+	}
+```
+
+**Добавляем в build.gradle.kts**
+```gradle
+	dependencies {
+	        implementation("com.github.DevAnlim:livesurf-android-sdk:v.1.0.0")
+	}
+```
+
+## 🚀 Пример использования (Kotlin)
 ```kotlin
 import ru.decpro.livesurfsdk.LiveSurfApi
 import kotlinx.coroutines.CoroutineScope
@@ -94,7 +113,7 @@ fun exampleLiveSurfKotlin() {
 }
 ```
 
-## Пример использования (Java)
+## 🚀 Пример использования (Java)
 ```java
 import ru.decpro.livesurfsdk.LiveSurfApi;
 import org.json.JSONArray;
@@ -199,7 +218,7 @@ public class LiveSurfJavaExample {
 | Метод | Описание |
 |-------|----------|
 | `getGroups()` | Информация о всех добавленных группах |
-| `getGroup(int $groupId)` | Информация о конкретной группе |
+| `getGroup(id: Int)` | Информация о конкретной группе |
 | `updateGroup(id: Int, data: JSONObject)` | Изменение настроек группы |
 | `deleteGroup(id: Int)` | Удаление группы |
 | `createGroup(data: JSONObject)` | Создание новой группы |
@@ -223,3 +242,4 @@ public class LiveSurfJavaExample {
 ## Лицензия
 
 MIT License — свободное использование, копирование и модификация.
+
