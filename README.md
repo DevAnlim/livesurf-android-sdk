@@ -18,11 +18,7 @@
 2. Открыть проект в Android Studio (File → Open -> выберите папку).
 3. Build → Make Project. Модуль `livesurf-android-sdk` сгенерирует AAR.
 
-<<<<<<< HEAD
 ## 📦 Подключаем к проекту
-=======
-## Подключаем к проекту
->>>>>>> 7989b8f25caa780f233219bc471967f3c7cac200
 **Добавляем в settings.gradle.kts**
 ```gradle
 	dependencyResolutionManagement {
@@ -41,11 +37,7 @@
 	}
 ```
 
-<<<<<<< HEAD
 ## 🚀 Пример использования (Kotlin)
-=======
-## Пример использования (Kotlin)
->>>>>>> 7989b8f25caa780f233219bc471967f3c7cac200
 ```kotlin
 import ru.decpro.livesurfsdk.LiveSurfApi
 import kotlinx.coroutines.CoroutineScope
