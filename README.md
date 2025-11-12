@@ -218,7 +218,7 @@ public class LiveSurfJavaExample {
 | Метод | Описание |
 |-------|----------|
 | `getGroups()` | Информация о всех добавленных группах |
-| `getGroup(int $groupId)` | Информация о конкретной группе |
+| `getGroup(id: Int)` | Информация о конкретной группе |
 | `updateGroup(id: Int, data: JSONObject)` | Изменение настроек группы |
 | `deleteGroup(id: Int)` | Удаление группы |
 | `createGroup(data: JSONObject)` | Создание новой группы |
