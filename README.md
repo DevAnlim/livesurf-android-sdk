@@ -2,7 +2,7 @@
 
 Этот репозиторий содержит Android-библиотеку на Kotlin.
 
-- PHP SDK для LiveSurf API (https://api.livesurf.ru/).
+- Android SDK для LiveSurf API (https://api.livesurf.ru/).
 - Документация API (https://livesurf.ru/api_documentation.html)
 - Получить API-ключ (https://livesurf.ru/api)
 
@@ -242,4 +242,5 @@ public class LiveSurfJavaExample {
 ## Лицензия
 
 MIT License — свободное использование, копирование и модификация.
+
 
